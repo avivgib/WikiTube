@@ -1,13 +1,13 @@
 .full-page {
   display: grid;
-  grid-template-columns: 200px 2fr 3fr;
+  grid-template-columns: 200px 1fr 2fr 3fr;
   grid-template-rows: 100px 300px 1fr;
   gap: 20px 20px;
   /* grid-auto-flow: row; */
   grid-template-areas:
-    "logo search search"
-    "video-list video-list video-player"
-    "video-list video-list wikipedia-result";
+    "logo search search search"
+    "video-list video-list video-player video-player"
+    "video-list video-list wikipedia-result wikipedia-result";
 }
 
 .video-player {
