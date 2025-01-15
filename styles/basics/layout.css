@@ -1,0 +1,23 @@
+.full-page {
+  display: grid;
+  grid-template-columns: 200px 2fr 3fr;
+  grid-template-rows: 100px 300px 1fr;
+  gap: 20px 20px;
+  /* grid-auto-flow: row; */
+  grid-template-areas:
+    "logo search search"
+    "video-list video-list video-player"
+    "video-list video-list wikipedia-result";
+}
+
+.video-player {
+  grid-area: video-player;
+}
+
+.video-list {
+  grid-area: video-list;
+}
+
+.wikipedia-result {
+  grid-area: wikipedia-result;
+}
