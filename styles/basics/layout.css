@@ -1,22 +1,20 @@
 .full-page {
   display: grid;
-  grid-template-columns: 200px 1fr 2fr 3fr;
-  grid-template-rows: 100px 300px 1fr;
-  gap: 20px 20px;
+  grid-template-columns: 120px 280px 3fr;
+  grid-template-rows: 110px 300px 1fr;
+  gap: 30px 20px;
   /* grid-auto-flow: row; */
   grid-template-areas:
-    "logo search search search"
-    "video-list video-list video-player video-player"
-    "video-list video-list wikipedia-result wikipedia-result";
+    "logo search search"
+    "play-list play-list video-player"
+    "play-list play-list wikipedia-result";
 }
 
 .video-player {
   grid-area: video-player;
 }
 
-.video-list {
-  grid-area: video-list;
-}
+
 
 .wikipedia-result {
   grid-area: wikipedia-result;

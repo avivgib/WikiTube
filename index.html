@@ -10,7 +10,7 @@
     <link rel="icon" type="image/png" href="./img/wikitube.png">
 </head>
 
-  <body>
+  <body onload="onInit()">
 
     <div class="full-page">
     
@@ -20,19 +20,21 @@
             <input class="search-input" type="text" autocomplete="off" role="combobox" placeholder="search"/>
             <button class="search-button"><i class="fas fa-search"></i></button>
         </section>
-    
 
-      <div class="video-player">
-        <iframe width="1200vw" height="600vh" src="https://www.youtube.com/embed/tgbNymZ7vqY">
-        </iframe>
-      </div>
-      <!-- API Youtube - AIzaSyCcS-xjaZ9O97RQ0cWGvyME4-8Je_loTIE -->
+      <div class="video-player">video-player</div>
 
-      <div class="video-list">video-list</div>
+      <div class="play-list"></div>
     
       <div class="wikipedia-result">wikipedia-result</div>
     
     </div>
 
-  </body>
+	
+    <script src="lib/axios.js"></script>
+    
+    <script src="js/services/youtube.service.js"></script>
+
+    <script src="js/controllers/youtube.controller.js"></script>
+  
+</body>
 </html>
