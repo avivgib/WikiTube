@@ -9,13 +9,13 @@
 }
 
 .play-list-card {
-  column-gap: 52px;
+  column-gap: 50px;
   font-size: 14px;
   margin-inline: 20px;
   display: flex;
   justify-content: space-between;
   height: fit-content;
-  width: auto;
+  width: -webkit-fill-available;
 }
 
 .play-list-card p {
