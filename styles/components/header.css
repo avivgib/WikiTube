@@ -10,9 +10,10 @@ header {
 
 .logo {
   grid-area: logo;
+  justify-self: center;
   margin: 0;
   padding: 0;
-  width: 100px;
+  width: 80px;
   cursor: pointer;
 }
 
@@ -24,7 +25,7 @@ header {
   border-radius: 50px;
   align-content: center;
   justify-self: center;
-  margin-block-start: 5px;
+  margin-block-start: 15px;
 }
 
 .search-input {
@@ -40,9 +41,9 @@ header {
   line-height: 3;
 }
 
-.search-input:focus::placeholder {
+/* .search-input:focus::placeholder {
   color: transparent;
-}
+} */
 
 .search-button {
   position: absolute;

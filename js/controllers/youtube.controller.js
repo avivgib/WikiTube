@@ -7,8 +7,7 @@ function onInit() {
 }
 
 function renderPlayList() {
-    youtubeService.
-        getPlayList()
+    getPlayList()
         .then(playList => {
             console.log(`Fetched playList: ${playList}`)
             renderPlayListHTML(playList)
@@ -39,7 +38,7 @@ function renderPlayListHTML(playList) {
 
 
 function renderCurrentVideo() {
-    const randomVideo = youtubeService.getRandomVideo()
+    const randomVideo = getRandomVideo()
 
     if (!randomVideo) {
         console.log('No video available to render.')
@@ -66,3 +65,24 @@ function renderCurrentVideoHTML(video) {
 
 
 function renderWikipedia() { }
+
+function onSearch() {
+    const inputSearchValue = document.querySelector('.search-input').value
+    if (!inputSearchValue || !inputSearchValue.length) {
+        console.log('No search query available...')
+        return
+    }
+
+    getDataBySearch(inputSearchValue)
+        .then(searchData => {
+            console.log(`Search Data: ${searchData}`)
+            if (!Array.isArray(searchData)) {
+                console.error('Error: searchData is not an array')
+                return
+            }
+            renderPlayListHTML(searchData)
+        })
+        .catch(err => {
+            console.error('Error during search:', err);
+        })
+}
