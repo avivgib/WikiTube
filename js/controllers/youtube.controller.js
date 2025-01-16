@@ -1,52 +1,20 @@
 'use strict'
 
-const PLAYLIST_STORAGE_KEY = 'savedPlayList'
-const CURRENT_STORAGE_KEY = 'savedCurrentMovie'
-
-const MAX_API_CALLS = 1000
-let apiCallsToday = 850
-
-
-const YT_KEY = 'AIzaSyCcS-xjaZ9O97RQ0cWGvyME4-8Je_loTIE'
-const value = 5
-
-const gCurrentVideo = ''
-
 function onInit() {
-    debugger
     renderPlayList()
-    // renderCurrentVideo()
+    renderCurrentVideo()
     // renderWikipedia()
 }
 
-
 function renderPlayList() {
-    const topSearch = loadFromStorage(PLAYLIST_STORAGE_KEY)
-
-    if (topSearch && topSearch.length) {
-        console.log('Data loaded from Local Storage:', topSearch)
-        renderPlayListHTML(topSearch)
-        return
-    }
-
-    if (apiCallsToday >= MAX_API_CALLS) {
-        console.log('Exceeded daily API call limit, using demo data.')
-        renderPlayListHTML(DEMO_DATA)
-        return
-    }
-
-    axios.get(`https://www.googleapis.com/youtube/v3/search?part=snippet&videoEmbeddable=true&type=video&key=${YT_KEY}`)
-        .then(res => {
-            apiCallsToday++
-            console.log('res.data:', res.data)
-
-            const topSearch = res.data.items
-            console.log('res.data.items:', res.data.items)
-            renderPlayListHTML(topSearch)
-            saveToStorage(PLAYLIST_STORAGE_KEY, topSearch)
+    youtubeService.
+        getPlayList()
+        .then(playList => {
+            console.log(`Fetched playList: ${playList}`)
+            renderPlayListHTML(playList)
         })
         .catch(err => {
-            console.error('Error fetching from API:', err.response ? err.response.data : err.message)
+            console.error('Failed to fetch playlist:', err)
         })
 }
 
@@ -58,7 +26,7 @@ function renderPlayListHTML(playList) {
         const title = song.snippet.title
         const pic = song.snippet.thumbnails.default.url
         console.log('song data:', song)
-        
+
         strHTML += `
                 <div class="play-list-card">
                     <p>${title}</p>
@@ -69,5 +37,33 @@ function renderPlayListHTML(playList) {
     elPlayList.innerHTML = strHTML
 }
 
-function renderCurrentVideo() { }
+
+function renderCurrentVideo() {
+    const randomVideo = youtubeService.getRandomVideo()
+
+    if (!randomVideo) {
+        console.log('No video available to render.')
+        return
+    }
+
+    renderCurrentVideoHTML(randomVideo)
+}
+
+function renderCurrentVideoHTML(video) {
+    const elVideoPlayer = document.querySelector('.video-player')
+    let strHTML = ''
+
+    const videoId = video.id.videoId
+    const title = video.snippet.title
+    strHTML += `
+        <div class="video">
+            <iframe width="1200vw" height="600vh" src="https://www.youtube.com/embed/${videoId}"></iframe>
+            <p>${title}</p>
+        </div>`
+
+
+    elVideoPlayer.innerHTML = strHTML
+}
+
+
 function renderWikipedia() { }
