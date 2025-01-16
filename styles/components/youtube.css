@@ -30,3 +30,13 @@
   width: min-content;
   height: min-content;
 }
+
+.video-player {
+  grid-area: video-player;
+}
+
+.video-frame {
+  width: 70vw; 
+  height: 70vh;
+  border-radius: 10px;
+}

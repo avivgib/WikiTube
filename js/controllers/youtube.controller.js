@@ -57,10 +57,9 @@ function renderCurrentVideoHTML(video) {
     const title = video.snippet.title
     strHTML += `
         <div class="video">
-            <iframe width="1200vw" height="600vh" src="https://www.youtube.com/embed/${videoId}"></iframe>
+            <iframe class="video-frame" src="https://www.youtube.com/embed/${videoId}"></iframe>
             <p>${title}</p>
         </div>`
-
 
     elVideoPlayer.innerHTML = strHTML
 }
