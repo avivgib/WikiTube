@@ -16,6 +16,7 @@
   justify-content: space-between;
   height: fit-content;
   width: -webkit-fill-available;
+  cursor: pointer;
 }
 
 .play-list-card p {
@@ -39,4 +40,5 @@
   width: 70vw; 
   height: 70vh;
   border-radius: 10px;
+  cursor: pointer;
 }

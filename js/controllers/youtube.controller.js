@@ -21,13 +21,13 @@ function renderPlayListHTML(playList) {
     const elPlayList = document.querySelector('.play-list')
     let strHTML = ''
 
-    playList.forEach(song => {
-        const title = song.snippet.title
-        const pic = song.snippet.thumbnails.default.url
-        console.log('song data:', song)
+    playList.forEach(video => {
+        const title = video.snippet.title
+        const pic = video.snippet.thumbnails.default.url
+        console.log('video data:', video)
 
         strHTML += `
-                <div class="play-list-card">
+                <div onclick="onPlayVideo('${video.id.videoId}')" class="play-list-card">
                     <p>${title}</p>
                     <img src="${pic}" alt="${title}" />
                 </div>`
@@ -76,13 +76,34 @@ function onSearch() {
     getDataBySearch(inputSearchValue)
         .then(searchData => {
             console.log(`Search Data: ${searchData}`)
+
             if (!Array.isArray(searchData)) {
                 console.error('Error: searchData is not an array')
                 return
             }
+
+            localStorage.setItem('lastSearch', JSON.stringify(searchData))
             renderPlayListHTML(searchData)
         })
         .catch(err => {
             console.error('Error during search:', err);
         })
+}
+
+function onPlayVideo(videoId) {
+    const lastSearch = localStorage.getItem('lastSearch')
+    if (!lastSearch) {
+        console.error('No search data available in localStorage.')
+        return
+    }
+
+    const playList = JSON.parse(lastSearch)
+
+    const selectedVideo = playList.find( video => video.id.videoId === videoId)
+    if (!selectedVideo) {
+        console.error('Video not found in localStorage:', videoId)
+        return
+    }
+
+    renderCurrentVideoHTML(selectedVideo)
 }
