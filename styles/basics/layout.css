@@ -5,11 +5,11 @@
   gap: 30px 20px;
   /* grid-auto-flow: row; */
   grid-template-areas:
-    ". search logo"
-    "play-list video-player video-player"
-    "play-list wikipedia-result wikipedia-result";
+    ". search-section wikitube-logo"
+    "video-playlist video-player-container video-player-container"
+    "video-playlist wikipedia-section wikipedia-section";
 }
 
-.wikipedia-result {
-  grid-area: wikipedia-result;
+.wikipedia-section {
+  grid-area: wikipedia-section;
 }

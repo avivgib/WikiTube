@@ -18,7 +18,7 @@ function renderPlayList() {
 }
 
 function renderPlayListHTML(playList) {
-    const elPlayList = document.querySelector('.play-list')
+    const elPlayList = document.querySelector('.video-playlist')
     let strHTML = ''
 
     playList.forEach(video => {
@@ -49,16 +49,14 @@ function renderCurrentVideo() {
 }
 
 function renderCurrentVideoHTML(video) {
-    const elVideoPlayer = document.querySelector('.video-player')
+    const elVideoPlayer = document.querySelector('.video-player-container')
     let strHTML = ''
 
     const videoId = video.id.videoId
     const title = video.snippet.title
     strHTML += `
-        <div class="video">
-            <iframe class="video-frame" src="https://www.youtube.com/embed/${videoId}"></iframe>
-            <p>${title}</p>
-        </div>`
+        <iframe class="video-frame" src="https://www.youtube.com/embed/${videoId}"></iframe>
+        <p>${title}</p>`
 
     elVideoPlayer.innerHTML = strHTML
 }

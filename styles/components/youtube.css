@@ -1,5 +1,5 @@
-.play-list {
-  grid-area: play-list;
+.video-playlist {
+  grid-area: video-playlist;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -32,8 +32,8 @@
   height: min-content;
 }
 
-.video-player {
-  grid-area: video-player;
+.video-player-container {
+  grid-area: video-player-container;
 }
 
 .video-frame {
