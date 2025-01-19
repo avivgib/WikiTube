@@ -1,19 +1,29 @@
-'use strict'
+'use strict' 
+
+let gCurrentSearch = ''
 
 function onInit() {
     renderPlayList()
-    renderCurrentVideo()
-    // renderWikipedia()
+        .then(playList => {
+            gCurrentSearch = PLAYLIST_STORAGE_KEY
+            renderVideo(playList[0])
+            // renderWikipedia()
+        })
+        .catch(err => {
+            console.error(`Error initializing: ${err}`)
+        })
 }
 
 function renderPlayList() {
-    getPlayList()
+    return getData(PLAYLIST_STORAGE_KEY)
         .then(playList => {
             console.log(`Fetched playList: ${playList}`)
             renderPlayListHTML(playList)
+            console.log(`playList: ${playList}`)
+            return playList
         })
         .catch(err => {
-            console.error('Failed to fetch playlist:', err)
+            console.error(`Failed to fetch playlist: ${err}`)
         })
 }
 
@@ -32,10 +42,7 @@ function renderPlayListHTML(playList) {
                     <img src="${pic}" alt="${title}" />
                 </div>`
     })
-
-    elPlayList.innerHTML = strHTML
 }
-
 
 function renderCurrentVideo() {
     const randomVideo = getRandomVideo()
@@ -54,13 +61,13 @@ function renderCurrentVideoHTML(video) {
 
     const videoId = video.id.videoId
     const title = video.snippet.title
-    strHTML += `
-        <iframe class="video-frame" src="https://www.youtube.com/embed/${videoId}"></iframe>
-        <p>${title}</p>`
 
-    elVideoPlayer.innerHTML = strHTML
+    elVideoPlayer.innerHTML = `
+            <div class="video">
+                <iframe class="video-frame" src="https://www.youtube.com/embed/${videoId}"></iframe>
+                <p>${title}</p>
+            </div>`
 }
-
 
 function renderWikipedia() { }
 
@@ -71,31 +78,24 @@ function onSearch() {
         return
     }
 
-    getDataBySearch(inputSearchValue)
+    getData(inputSearchValue)
         .then(searchData => {
             console.log(`Search Data: ${searchData}`)
-
-            if (!Array.isArray(searchData)) {
-                console.error('Error: searchData is not an array')
-                return
-            }
-
-            localStorage.setItem('lastSearch', JSON.stringify(searchData))
+            saveToStorage(inputSearchValue, searchData)
             renderPlayListHTML(searchData)
+            renderCurrentVideoHTML(searchData[0])
         })
         .catch(err => {
             console.error('Error during search:', err);
         })
 }
 
-function onPlayVideo(videoId) {
-    const lastSearch = localStorage.getItem('lastSearch')
-    if (!lastSearch) {
+function onSelectVideo(videoId) {
+    const playList = loadFromStorage(gCurrentSearch)
+    if (!playList) {
         console.error('No search data available in localStorage.')
         return
     }
-
-    const playList = JSON.parse(lastSearch)
 
     const selectedVideo = playList.find( video => video.id.videoId === videoId)
     if (!selectedVideo) {

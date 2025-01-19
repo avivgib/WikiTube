@@ -34,6 +34,7 @@ header {
   border: 1px solid rgb(168, 167, 167);
   border-radius: 40px 0 0 40px;
   padding: 0 20px;
+  cursor: text;
 }
 
 .search-input::-webkit-input-placeholder {
