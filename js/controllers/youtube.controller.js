@@ -29,36 +29,33 @@ function renderPlayList() {
 
 function renderPlayListHTML(playList) {
     const elPlayList = document.querySelector('.video-playlist')
-    let strHTML = ''
-
+    elPlayList.innerHTML = ''
+    
     playList.forEach(video => {
         const title = video.snippet.title
         const pic = video.snippet.thumbnails.default.url
-        console.log('video data:', video)
+        const id = video.id.videoId
+        // console.log(`video data: ${video}`)
 
-        strHTML += `
-                <div onclick="onPlayVideo('${video.id.videoId}')" class="play-list-card">
+        elPlayList.innerHTML += `
+                <div onclick="onSelectVideo('${id}')" class="play-list-card">
                     <p>${title}</p>
                     <img src="${pic}" alt="${title}" />
                 </div>`
     })
 }
 
-function renderCurrentVideo() {
-    const randomVideo = getRandomVideo()
-
-    if (!randomVideo) {
+function renderVideo(video) {
+    if (!video) {
         console.log('No video available to render.')
         return
     }
 
-    renderCurrentVideoHTML(randomVideo)
+    renderCurrentVideoHTML(video)
 }
 
 function renderCurrentVideoHTML(video) {
     const elVideoPlayer = document.querySelector('.video-player-container')
-    let strHTML = ''
-
     const videoId = video.id.videoId
     const title = video.snippet.title
 
@@ -72,8 +69,12 @@ function renderCurrentVideoHTML(video) {
 function renderWikipedia() { }
 
 function onSearch() {
-    const inputSearchValue = document.querySelector('.search-input').value
-    if (!inputSearchValue || !inputSearchValue.length) {
+    const inputSearchValue = document.querySelector('.search-input').value.trim()
+    
+    gCurrentSearch = inputSearchValue
+    console.log(`gCurrentSearch: ${gCurrentSearch}`)
+
+    if (!inputSearchValue) {
         console.log('No search query available...')
         return
     }
