@@ -42,10 +42,6 @@ header {
   line-height: 3;
 }
 
-/* .search-input:focus::placeholder {
-  color: transparent;
-} */
-
 .search-button {
   position: absolute;
   top: 0;

@@ -1,4 +1,4 @@
-'use strict' 
+'use strict'
 
 let gCurrentSearch = ''
 
@@ -19,7 +19,6 @@ function renderPlayList() {
         .then(playList => {
             console.log(`Fetched playList: ${playList}`)
             renderPlayListHTML(playList)
-            console.log(`playList: ${playList}`)
             return playList
         })
         .catch(err => {
@@ -30,17 +29,15 @@ function renderPlayList() {
 function renderPlayListHTML(playList) {
     const elPlayList = document.querySelector('.video-playlist')
     elPlayList.innerHTML = ''
-    
+
     playList.forEach(video => {
-        const title = video.snippet.title
-        const pic = video.snippet.thumbnails.default.url
-        const id = video.id.videoId
-        // console.log(`video data: ${video}`)
+        const { title, thumbnails } = video.snippet
+        const { videoId } = video.id
 
         elPlayList.innerHTML += `
-                <div onclick="onSelectVideo('${id}')" class="play-list-card">
+                <div onclick="onSelectVideo('${videoId}')" class="play-list-card">
                     <p>${title}</p>
-                    <img src="${pic}" alt="${title}" />
+                    <img src="${thumbnails.default.url}" alt="${title}" />
                 </div>`
     })
 }
@@ -51,13 +48,17 @@ function renderVideo(video) {
         return
     }
 
-    renderCurrentVideoHTML(video)
+    renderVideoHTML(video)
 }
 
-function renderCurrentVideoHTML(video) {
+function renderVideoHTML(video) {
     const elVideoPlayer = document.querySelector('.video-player-container')
-    const videoId = video.id.videoId
-    const title = video.snippet.title
+
+    const { videoId } = video.id
+    const { title } = video.snippet
+
+    // const videoId = video.id.videoId
+    // const title = video.snippet.title
 
     elVideoPlayer.innerHTML = `
             <div class="video">
@@ -70,21 +71,20 @@ function renderWikipedia() { }
 
 function onSearch() {
     const inputSearchValue = document.querySelector('.search-input').value.trim()
-    
-    gCurrentSearch = inputSearchValue
-    console.log(`gCurrentSearch: ${gCurrentSearch}`)
-
     if (!inputSearchValue) {
         console.log('No search query available...')
         return
     }
+
+    gCurrentSearch = inputSearchValue
+    console.log(`gCurrentSearch: ${gCurrentSearch}`)
 
     getData(inputSearchValue)
         .then(searchData => {
             console.log(`Search Data: ${searchData}`)
             saveToStorage(inputSearchValue, searchData)
             renderPlayListHTML(searchData)
-            renderCurrentVideoHTML(searchData[0])
+            renderVideoHTML(searchData[0])
         })
         .catch(err => {
             console.error('Error during search:', err);
@@ -98,11 +98,11 @@ function onSelectVideo(videoId) {
         return
     }
 
-    const selectedVideo = playList.find( video => video.id.videoId === videoId)
+    const selectedVideo = playList.find(video => video.id.videoId === videoId)
     if (!selectedVideo) {
         console.error('Video not found in localStorage:', videoId)
         return
     }
 
-    renderCurrentVideoHTML(selectedVideo)
+    renderVideoHTML(selectedVideo)
 }
