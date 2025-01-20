@@ -16,9 +16,8 @@ function getData(searchKey = '') {
 
     return axios.get(url)
         .then(res => {
-            const searchData = res.data.items
             console.log('res.data:', res.data)
-
+            const searchData = res.data.items
             saveToStorage(searchKey, searchData)
             return Promise.resolve(searchData)
         })
@@ -26,5 +25,4 @@ function getData(searchKey = '') {
             console.error('Error fetching from API:', err.response ? err.response.data : err.message)
             return Promise.reject(err)
         })
-
 }

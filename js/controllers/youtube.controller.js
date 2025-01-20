@@ -1,19 +1,5 @@
 'use strict'
 
-let gCurrentSearch = ''
-
-function onInit() {
-    renderPlayList()
-        .then(playList => {
-            gCurrentSearch = PLAYLIST_STORAGE_KEY
-            renderVideo(playList[0])
-            // renderWikipedia()
-        })
-        .catch(err => {
-            console.error(`Error initializing: ${err}`)
-        })
-}
-
 function renderPlayList() {
     return getData(PLAYLIST_STORAGE_KEY)
         .then(playList => {
@@ -67,29 +53,7 @@ function renderVideoHTML(video) {
             </div>`
 }
 
-function renderWikipedia() { }
-
-function onSearch() {
-    const inputSearchValue = document.querySelector('.search-input').value.trim()
-    if (!inputSearchValue) {
-        console.log('No search query available...')
-        return
-    }
-
-    gCurrentSearch = inputSearchValue
-    console.log(`gCurrentSearch: ${gCurrentSearch}`)
-
-    getData(inputSearchValue)
-        .then(searchData => {
-            console.log(`Search Data: ${searchData}`)
-            saveToStorage(inputSearchValue, searchData)
-            renderPlayListHTML(searchData)
-            renderVideoHTML(searchData[0])
-        })
-        .catch(err => {
-            console.error('Error during search:', err);
-        })
-}
+// function renderWikipedia() { }
 
 function onSelectVideo(videoId) {
     const playList = loadFromStorage(gCurrentSearch)
