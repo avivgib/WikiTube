@@ -1,0 +1,9 @@
+.wikipedia-section {
+    grid-area: wikipedia-section;
+    padding: 10px;
+    margin-inline-end: 9%;
+    text-align: end;
+    justify-self: right;
+    height: max-content;
+    width: 35vw;
+  }
