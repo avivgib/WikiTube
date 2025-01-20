@@ -1,29 +1,31 @@
 'use strict'
 
 function renderWikipedia() {
-    return getWikiData(WIKI_STORAGE_KEY)
-        .then(wikiData => {
-            renderWikiDataHTML(wikiData)
-            return wikiData
+    return fetchWikipediaArticles(WIKI_SEARCH_KEY)
+        .then(wikiResults => {
+            console.log(`wikiResults: ${wikiResults}`)
+            debugger
+            displayWikipediaResults(wikiResults)
+            return wikiResults
         })
         .catch(err => {
             console.error(`Failed to fetch wikiData: ${err}`)
         })
 }
 
-function renderWikiDataHTML(wikiListData) {
-    const elWikipediaData = document.querySelector('.wikipedia-section')
-    elWikipediaData.innerHTML = ''
-    console.log(`inputSearchValue: ${wikiListData}`)
+function displayWikipediaResults(wikiResults) {
+    const elWikipediaSection = document.querySelector('.wikipedia-section')
+    elWikipediaSection.innerHTML = ''
+    console.log(`Fetched Wikipedia results: ${wikiResults}`)
     debugger
 
-    wikiListData.map(wikiData => {
-        const { title, snippet } = wikiData
+    wikiResults.slice(0, 4).map(wikiArticle => {
+        const { title, snippet } = wikiArticle
 
-        elWikipediaData.innerHTML += `
-                <div class="wiki-data">
-                    <h5>${title}</h5>
+        elWikipediaSection.innerHTML += `
+                <section class="wiki-data">
+                    <h3>${title}</h3>
                     <p>${snippet}</p>
-                </div>`
+                </section>`
     })
 }

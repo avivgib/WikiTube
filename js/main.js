@@ -1,38 +1,38 @@
 'use strict'
 
-let gCurrentSearch = ''
+let gSearchQuery = ''
 
 function onInit() {
     renderPlayList()
         .then(playList => {
-            gCurrentSearch = PLAYLIST_STORAGE_KEY
+            gSearchQuery = PLAYLIST_STORAGE_KEY
             renderVideo(playList[0])
             console.log(`[playList[0]]: ${[playList[0]]}`)
         })
         .catch(err => {
-            console.error(`Error initializing: ${err}`)
+            console.error(`Error during initialization: ${err}`)
         })
     debugger
     renderWikipedia()
 }
 
 function onSearch() {
-    const inputSearchValue = document.querySelector('.search-input').value.trim()
-    if (!inputSearchValue) {
+    const searchInput = document.querySelector('.search-input').value.trim()
+    if (!searchInput) {
         console.log('No search query available...')
         return
     }
 
-    gCurrentSearch = inputSearchValue
-    console.log(`gCurrentSearch: ${gCurrentSearch}`)
+    gSearchQuery = searchInput
+    console.log(`gSearchQuery: ${gSearchQuery}`)
 
-    getData(inputSearchValue)
-        .then(searchData => {
-            console.log(`Search Data: ${searchData}`)
-            saveToStorage(inputSearchValue, searchData)
-            renderPlayListHTML(searchData)
-            renderVideoHTML(searchData[0])
-            renderWikiDataHTML(gCurrentSearch)
+    getData(searchInput)
+        .then(results => {
+            console.log(`Search Results: ${results}`)
+            saveToStorage(searchInput, results)
+            renderPlayListHTML(results)
+            renderVideoHTML(results[0])
+            renderWikiDataHTML(gSearchQuery)
         })
         .catch(err => {
             console.error('Error during search:', err);

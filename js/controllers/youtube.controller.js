@@ -56,7 +56,7 @@ function renderVideoHTML(video) {
 // function renderWikipedia() { }
 
 function onSelectVideo(videoId) {
-    const playList = loadFromStorage(gCurrentSearch)
+    const playList = loadFromStorage(gSearchQuery)
     if (!playList) {
         console.error('No search data available in localStorage.')
         return
