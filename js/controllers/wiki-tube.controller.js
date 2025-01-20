@@ -14,15 +14,15 @@ function onSearch(searchInput = '') {
     }
 
     gSearchQuery = query
-    console.log(`gSearchQuery: ${gSearchQuery}`)
+    // console.log(`gSearchQuery: ${gSearchQuery}`)
 
     Promise.all([
         getData(gSearchQuery),
         fetchWikipediaArticles(gSearchQuery)
     ])
     .then(([youtubeResults, wikipediaResults]) => {
-        console.log(`Search Results (YouTube): ${youtubeResults}`)
-        console.log(`Search Results (wikipediaResults): ${wikipediaResults}`)
+        // console.log(`Search Results (YouTube): ${youtubeResults}`)
+        // console.log(`Search Results (wikipediaResults): ${wikipediaResults}`)
         
         saveToStorage(searchInput + '_youtube', youtubeResults)
         saveToStorage(searchInput + '_wiki', wikipediaResults)
@@ -32,7 +32,7 @@ function onSearch(searchInput = '') {
         displayWikipediaResults(wikipediaResults)
     })
     .catch(err => {
-        console.error('Error during search:', err);
+        console.error('Error during search:', err)
     })
 }
 
@@ -54,7 +54,7 @@ function renderPlayList(playList) {
 }
 
 function onSelectVideo(videoId) {
-    const playList = loadFromStorage(gSearchQuery)
+    const playList = loadFromStorage(gSearchQuery + '_youtube')
     if (!playList) {
         console.error('No search data available in localStorage.')
         return
@@ -85,9 +85,9 @@ function renderVideo(video) {
 
 // Wikipedia Functions
 function displayWikipediaResults(wikiResults) {
+    // console.log(`Fetched Wikipedia results: ${wikiResults}`)
     const elWikipediaSection = document.querySelector('.wikipedia-section')
     elWikipediaSection.innerHTML = ''
-    console.log(`Fetched Wikipedia results: ${wikiResults}`)
 
     if (wikiResults.length === 0) {
         elWikipediaSection.innerHTML = `
@@ -97,7 +97,7 @@ function displayWikipediaResults(wikiResults) {
         return      
     }
 
-    wikiResults.slice(0, 4).map(wikiArticle => {
+    wikiResults.slice(0, 6).map(wikiArticle => {
         const { title, snippet } = wikiArticle
 
         elWikipediaSection.innerHTML += `

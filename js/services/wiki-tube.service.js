@@ -12,11 +12,11 @@ function getData(searchTerm = '') {
     }
 
     const url = `https://www.googleapis.com/youtube/v3/search?key=${YT_KEY}&part=snippet&videoEmbeddable=true&type=video&maxResults=20&q=${encodeURIComponent(searchTerm)}`
-    console.log(`YouTube API URL: ${url}`)
+    // console.log(`YouTube API URL: ${url}`)
 
     return axios.get(url)
         .then(response => {
-            console.log('response.data:', response.data)
+            // console.log('response.data:', response.data)
             const searchData = response.data.items
             saveToStorage(searchTerm + '_youtube', searchData)
             return Promise.resolve(searchData)
@@ -34,8 +34,8 @@ function fetchWikipediaArticles(searchTerm = '') {
         return Promise.resolve(cachedArticles)
     }
 
-    const url = `https://en.wikipedia.org/w/api.php?&origin=*&action=query&list=search&srsearch=${encodeURIComponent(searchTerm)}&format=json`;
-    console.log(`Wikipedia API URL: ${url}`)
+    const url = `https://en.wikipedia.org/w/api.php?&origin=*&action=query&list=search&srsearch=${encodeURIComponent(searchTerm)}&format=json`
+    // console.log(`Wikipedia API URL: ${url}`)
 
     return axios.get(url)
         .then(response => {
